@@ -1,5 +1,19 @@
-<div class="container">
+<div class="location-card" *ngIf="currentUser; else loggedOut">
   <header class="jumbotron">
-    <p>{{ content }}</p>
+    <div class="location-card card-container">
+      <div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input" id="customSwitch1">
+        <label class="custom-control-label" for="customSwitch1">Toggle Location</label>
+      </div>
+      <p></p>
+    </div>
+    <div class="location-card card-container">
+      <h4>Locations:</h4>
+      <p>Feature coming soon...</p>
+    </div>
   </header>
 </div>
+
+<ng-template #loggedOut>
+  Please login.
+</ng-template>
