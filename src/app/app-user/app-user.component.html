@@ -2,17 +2,46 @@
   <header class="jumbotron">
     <div class="location-card card-container">
       <div class="custom-control custom-switch">
-        <input type="checkbox" class="custom-control-input" id="customSwitch1">
+        <input type="checkbox" class="custom-control-input" id="customSwitch1" (input)="logLocation(this)">
         <label class="custom-control-label" for="customSwitch1">Toggle Location</label>
       </div>
       <p></p>
     </div>
     <div class="location-card card-container">
       <h4>Locations:</h4>
-      <p>Feature coming soon...</p>
+      <ul *ngIf="locations.length && !locationAlert; else noLocations">
+        <li *ngFor="let location of locations">
+          <!-- Format the timestamp MM/DD/YYYY SS:MM:MS -->
+          {{location.timeStamp}}<br>
+          ({{location.longitude}}, {{location.latitude}})<br>
+          <a (click)="deleteLocation(location._id)" class="text-danger">Delete</a>
+        </li>
+      </ul>
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="locationAlert"
+      >
+        Location deletion failed: {{ locationAlert }}
+      </div>
     </div>
   </header>
 </div>
+
+<ng-template #noLocations>
+  <div #alert class="alert alert-danger alert-dismissible fade show" role="alert">
+    <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="alert-heading">
+       You have no locations stored.
+     </h4>
+     <p>
+      Please toggle locations on to start logging your location every 5 minutes.<br>
+      You may need to enable Location permissions in your app/browser settings.
+    </p>
+  </div>
+</ng-template>
 
 <ng-template #loggedOut>
   Please login.

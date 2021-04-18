@@ -1,15 +1,63 @@
 <div class="location-card" *ngIf="currentUser; else loggedOut">
   <header class="jumbotron">
-    <div class="location-card card-container">
-      <div class="custom-control custom-switch">
-        <input type="checkbox" class="custom-control-input" id="customSwitch1">
-        <label class="custom-control-label" for="customSwitch1">Toggle Location</label>
-      </div>
-      <p></p>
+    <div class="role-card card-container">
+      <h4>User Role Management:</h4>
+      <form
+        name="form"
+        (ngSubmit)="f.form.valid && onSubmit()"
+        #f="ngForm"
+        novalidate
+      >
+        <div class="form-group">
+          <button class="btn btn-primary btn-block">
+            Update User Roles
+          </button>
+        </div>
+        <table class="table table-bordered form-group" id="roleTable">
+          <thead>
+            <tr>
+              <th scope="col">
+                User ID
+              </th>
+              <th scope="col">
+                Username
+              </th>
+              <th scope="col" colspan="2">
+                Roles
+              </th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let row of tblRows; let i = index;">
+            <tr>
+              <td>
+                {{ row.userId }}
+              </td>
+              <td>
+                {{ row.username }}
+              </td>
+              <ng-template let-role ngFor [ngForOf]="row.userRoles">
+                <td>
+                  <div class="custom-control custom-checkbox" *ngIf="role.checked">
+                    <input type="checkbox" class="custom-control-input" [attr.id]="row.username+role.name+'checkbox'" checked>
+                    <label class="custom-control-label" [htmlFor]="row.username+role.name+'checkbox'">{{ role.name }}</label>
+                  </div>
+                  <div class="custom-control custom-checkbox" *ngIf="!role.checked">
+                    <input type="checkbox" class="custom-control-input" [attr.id]="row.username+role.name+'checkbox'">
+                    <label class="custom-control-label" [htmlFor]="row.username+role.name+'checkbox'">{{ role.name }}</label>
+                  </div>
+                </td>
+              </ng-template>
+            </tr>
+          </tbody>
+        </table>
+      </form>
     </div>
-    <div class="location-card card-container">
-      <h4>Locations:</h4>
-      <p>Feature coming soon...</p>
+    <div
+      class="alert alert-danger"
+      role="alert"
+      *ngIf="userManagerAlert"
+    >
+      There was an issue loading users:<br>{{ userManagerAlert }}
     </div>
   </header>
 </div>
