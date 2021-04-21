@@ -4,7 +4,9 @@ import {GeolocationService} from '@ng-web-apis/geolocation';
 import { Observable } from 'rxjs';
 import {take} from "rxjs/operators";
 
-const API_URL = 'http://localhost:8080/api/test/';
+// const API_URL = 'http://localhost:8080/api/test/';
+const API_URL = 'http://3.139.61.89:8080/api/test/';
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
