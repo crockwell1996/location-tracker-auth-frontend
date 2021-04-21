@@ -19,6 +19,56 @@
       {{ role }}
     </li>
   </ul>
+  <div class="username-card">
+    <div class="username-card card-container">
+      <form
+        *ngIf="currentUser"
+        name="form"
+        (ngSubmit)="f.form.valid && onSubmit()"
+        #f="ngForm"
+        novalidate
+      >
+        <div class="form-group">
+          <label for="newUsername">New Username</label>
+          <input
+            type="text"
+            class="form-control"
+            name="newUsername"
+            [(ngModel)]="form.newUsername"
+            required
+            #newUsername="ngModel"
+          />
+          <div
+            class="alert alert-danger"
+            role="alert"
+            *ngIf="newUsername.errors && f.submitted"
+          >
+            <div *ngIf="newUsername.errors.required">No username entered.</div>
+            <div *ngIf="newUsername.errors">
+              {{errorMessage}}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary btn-block">
+            Update
+          </button>
+        </div>
+        <div class="form-group">
+          <div
+            class="alert alert-danger"
+            role="alert"
+            *ngIf="f.submitted && isUsernameUpdateFailed"
+          >
+            Username update failed: {{ errorMessage }}
+          </div>
+        </div>
+      </form>
+      <div class="alert alert-success" *ngIf="isSuccessful">
+        {{ successMessage }}
+      </div>
+    </div>
+  </div>
 </div>
 
 <ng-template #loggedOut>
